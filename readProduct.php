@@ -10,7 +10,7 @@ class Product{
     public $category;
     
     // Obtener productos por categoría
-    function readCategory($category){
+    function readProducts($category){
         $query = "SELECT * FROM product where category = :category";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':category', $category, PDO::PARAM_INT);

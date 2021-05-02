@@ -3,18 +3,19 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once 'db.php';
-include_once 'read.php';
+include_once 'readProduct.php';
 
 // Se inicializa la Clase
 $database = new Database();
 $db = $database->getConnection();
+
 // Se inicializa el objeto
 $product = new Product($db);
 
 if(isset($_GET['category'])){
 
     $category = $_GET['category'];
-    $stmt = $product->readCategory($category);
+    $stmt = $product->readProducts($category);
     $num = $stmt->rowCount();
 
     // Validamos si existe un dato
@@ -40,11 +41,11 @@ if(isset($_GET['category'])){
 
         http_response_code(404);
         echo json_encode(
-            array("message" => "No hay productos en la categoría seleccionada.")
+            array("message" => "No hay productos en la categoría seleccionada")
         );
     }
 }else{
-    
+
     $stmt = $product->readAll();
     $num = $stmt->rowCount();
 
@@ -52,6 +53,7 @@ if(isset($_GET['category'])){
     if($num>0){
         $products_arr=array();
         $products_arr["data"]=array();
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $product_item=array(
@@ -67,9 +69,10 @@ if(isset($_GET['category'])){
         http_response_code(200);
         echo json_encode($products_arr);
     }else{
+
         http_response_code(404);
         echo json_encode(
-            array("message" => "No hay productos en la categoría seleccionada.")
+            array("message" => "No hay productos en la categoría seleccionada")
         );
     }
 
