@@ -36,7 +36,7 @@ if(isset($_GET['category'])){
             array_push($products_arr["data"], $product_item);
         }
         http_response_code(200);
-        echo json_encode($products_arr);
+        echo json_encode($products_arr["data"]);
     }else{
 
         http_response_code(404);
@@ -67,7 +67,7 @@ if(isset($_GET['category'])){
             array_push($products_arr["data"], $product_item);
         }
         http_response_code(200);
-        echo json_encode($products_arr);
+        echo json_encode($products_arr["data"]);
     }else{
 
         http_response_code(404);

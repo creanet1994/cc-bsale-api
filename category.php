@@ -28,7 +28,7 @@ if($num>0){
         array_push($category_arr["data"], $category_item);
     }
     http_response_code(200);
-    echo json_encode($category_arr);
+    echo json_encode($category_arr["data"]);
 }else{
 
     http_response_code(404);
