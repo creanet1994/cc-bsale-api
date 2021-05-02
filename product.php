@@ -14,7 +14,8 @@ $product = new Product($db);
 
 if (isset($_GET['search'])) {
     $keyword = $_GET['search'];
-    $stmt = $product->readProductsSearch($keyword);
+    $page = $_GET['page'];
+    $stmt = $product->readProductsSearch($keyword, $page);
     $num = $stmt->rowCount();
     if($num>0){
         $products_arr=array();
@@ -41,9 +42,7 @@ if (isset($_GET['search'])) {
             array("message" => "No hay productos que coincidan con la busqueda")
         );
     }
-}
-
-if(isset($_GET['category'])){
+}else if(isset($_GET['category'])){
 
     $category = $_GET['category'];
     $stmt = $product->readProducts($category);
@@ -75,4 +74,6 @@ if(isset($_GET['category'])){
             array("message" => "No hay productos en la categoría seleccionada")
         );
     }
+}else{
+    http_response_code(404);
 }
