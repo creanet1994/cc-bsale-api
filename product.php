@@ -12,6 +12,7 @@ $db = $database->getConnection();
 // Se inicializa el objeto
 $product = new Product($db);
 
+//if que controla las peticiones
 if (isset($_GET['search'])) {
 
     $keyword = $_GET['search'];
