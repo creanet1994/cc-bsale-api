@@ -15,6 +15,8 @@ $category = new Category($db);
 $stmt = $category->read();
 $num = $stmt->rowCount();
 
+//Peticion para busqueda por nombre de producto
+
 if($num>0){
     $category_arr=array();
     $category_arr["data"]=array();
@@ -30,7 +32,6 @@ if($num>0){
     http_response_code(200);
     echo json_encode($category_arr["data"]);
 }else{
-
     http_response_code(404);
     echo json_encode(
         array("message" => "No hay categorías")

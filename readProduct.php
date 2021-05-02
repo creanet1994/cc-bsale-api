@@ -1,13 +1,14 @@
 <?php
 class Product{
 
+    //
     private $conn;
-    public $id;
-    public $name;
-    public $url_image;
-    public $price;
-    public $discount;
-    public $category;
+    // public $id;
+    // public $name;
+    // public $url_image;
+    // public $price;
+    // public $discount;
+    // public $category;
 
     // Obtener productos por categoría
     function readProducts($category){
@@ -18,6 +19,7 @@ class Product{
         return $stmt;
     }
 
+    // Obtener productos por nombre
     function readProductsSearch($keyword ){
         $query = "SELECT * FROM product where name LIKE '%' :keyword '%' ";
         $stmt = $this->conn->prepare($query);
@@ -26,6 +28,7 @@ class Product{
         return $stmt;
     }
 
+    // Obtener todos los productos
     function readAll(){
         $query = "SELECT * FROM product";
         $stmt = $this->conn->prepare($query);

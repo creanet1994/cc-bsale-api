@@ -13,6 +13,8 @@ $db = $database->getConnection();
 $product = new Product($db);
 
 //if que controla las peticiones
+
+// Petición para busqueda por nombre de producto
 if (isset($_GET['search'])) {
 
     $keyword = $_GET['search'];
@@ -20,12 +22,11 @@ if (isset($_GET['search'])) {
     $stmt = $product->readProductsSearch($keyword);
     $num = $stmt->rowCount();
 
-    // readProductsTotal();
+    // Control para la existencia de respuesta.
+
     if($num>0){
         $products_arr=array();
         $products_arr["data"]=array();
-
-
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $product_item=array(
@@ -48,15 +49,15 @@ if (isset($_GET['search'])) {
             array("message" => "No hay productos que coincidan con la busqueda")
         );
     }
+// Petición para busqueda por categoria de productos
 }else if(isset($_GET['category'])){
 
     $category = $_GET['category'];
-
-
     $stmt = $product->readProducts($category);
     $num = $stmt->rowCount();
 
-    // Validamos si existe un dato
+    // Control para la existencia de respuesta
+
     if($num>0){
         $products_arr=array();
         $products_arr["data"]=array();
@@ -73,16 +74,15 @@ if (isset($_GET['search'])) {
             );
             array_push($products_arr["data"], $product_item);
         }
-
         http_response_code(200);
         echo json_encode($products_arr["data"]);
     }else{
-
         http_response_code(404);
         echo json_encode(
             array("message" => "No hay productos en la categoría seleccionada")
         );
     }
+
 }else{
     http_response_code(404);
 }
