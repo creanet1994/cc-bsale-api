@@ -14,13 +14,13 @@ $product = new Product($db);
 if(isset($_GET['category'])){
 
     $category = $_GET['category'];
-    $stmt = $product->read($category);
+    $stmt = $product->readCategory($category);
     $num = $stmt->rowCount();
 
     // Validamos si existe un dato
     if($num>0){
         $products_arr=array();
-        $products_arr["records"]=array();
+        $products_arr["data"]=array();
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
@@ -32,7 +32,7 @@ if(isset($_GET['category'])){
                 "discount" => $discount,
                 "category" => $category
             );
-            array_push($products_arr["records"], $product_item);
+            array_push($products_arr["data"], $product_item);
         }
         http_response_code(200);
         echo json_encode($products_arr);
@@ -40,7 +40,37 @@ if(isset($_GET['category'])){
 
         http_response_code(404);
         echo json_encode(
-            array("message" => "No products found.")
+            array("message" => "No hay productos en la categoría seleccionada.")
         );
     }
+}else{
+    
+    $stmt = $product->readAll();
+    $num = $stmt->rowCount();
+
+    // Validamos si existe un dato
+    if($num>0){
+        $products_arr=array();
+        $products_arr["data"]=array();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $product_item=array(
+                "id" => $id,
+                "name" => $name,
+                "url_image" => html_entity_decode($url_image),
+                "price" => $price,
+                "discount" => $discount,
+                "category" => $category
+            );
+            array_push($products_arr["data"], $product_item);
+        }
+        http_response_code(200);
+        echo json_encode($products_arr);
+    }else{
+        http_response_code(404);
+        echo json_encode(
+            array("message" => "No hay productos en la categoría seleccionada.")
+        );
+    }
+
 }
