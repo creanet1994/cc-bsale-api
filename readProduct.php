@@ -18,6 +18,14 @@ class Product{
         return $stmt;
     }
 
+    function readProductsSearch($keyword){
+        $query = "SELECT * FROM product where name LIKE '%' :keyword '%' ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt;
+    }
+
     function readAll(){
         $query = "SELECT * FROM product";
         $stmt = $this->conn->prepare($query);
