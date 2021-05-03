@@ -1,14 +1,7 @@
 <?php
 class Product{
 
-    //
     private $conn;
-    // public $id;
-    // public $name;
-    // public $url_image;
-    // public $price;
-    // public $discount;
-    // public $category;
 
     // Obtener productos por categoría
     function readProducts($category){
